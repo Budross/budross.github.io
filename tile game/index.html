@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Interactive Grid Tile Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="nav-section resources-section">
+      <h2>Resources</h2>
+      <div class="resources-display">
+        <span id="workerAmount">Worker: 0</span>
+        <span id="foodAmount">Food: 0</span>
+        <span id="woodAmount">Wood: 0</span>
+        <span id="stoneAmount">Stone: 0</span>
+      </div>
+    </div>
+
+    <div class="nav-section">
+      <h2>Navigation</h2>
+      <div class="nav-item" data-window="gameInfo">Game Info</div>
+      <div class="nav-item" data-window="saveControls">Save Game</div>
+      <div class="nav-item" data-window="paintControls">Buildings</div>
+    </div>
+
+    <div class="content-section">
+      <!-- Game Info Window -->
+      <div class="content-window" id="gameInfo">
+        <strong>Interactive Infinite Grid Demo</strong>
+        <span>🖱️ Click and drag to pan</span>
+        <span>🔍 Scroll wheel to zoom</span>
+        <span>⌨️ Spacebar to center origin</span>
+        <span>🎯 '1' key: Pan mode</span>
+        <span>🎨 '2' key: Selection mode</span>
+        <span>🖌️ '3' key: Paint mode</span>
+        <span>🔧 Base tile size: 32px</span>
+        <span>📏 Grid: infinite</span>
+        <span id="viewport-info">Center: (0, 0)</span>
+        <span id="zoom-info">Zoom: 1.0x</span>
+        <span id="mode-info">Mode: Pan</span>
+        <span id="paint-info">Painted tiles: 0</span>
+        <span id="terrain-info">Terrain: None</span>
+        <span id="atlas-info">Atlas: Loading...</span>
+      </div>
+
+      <!-- Save Controls Window -->
+      <div class="content-window" id="saveControls">
+        <strong>💾 Save Game</strong>
+        <div class="control-group">
+          <button id="saveGameBtn" class="action-btn">Save Game</button>
+          <button id="loadGameBtn" class="action-btn">Load Game</button>
+          <button id="clearSaveBtn" class="action-btn warning-btn">Clear Save</button>
+        </div>
+        <span id="saveInfo" class="save-info">Auto-save: every 30s</span>
+      </div>
+
+      
+
+      <!-- Paint Controls Window -->
+      <div class="content-window" id="paintControls">
+        <strong>Buildings</strong>
+        <div class="control-group">
+          <div class="building-palette">
+            <button class="building-btn active" data-building="house" style="background-color: #8B4513; color: white;" title="House - Adds 2 workers">🏠 House</button>
+            <button class="building-btn" data-building="farm" style="background-color: #228B22; color: white;" title="Farm - Generates 1 food/second">🌾 Farm</button>
+            <button class="building-btn" data-building="lumberyard" style="background-color: #654321; color: white;" title="Lumberyard - Processes wood from the forest">🪵 Lumberyard</button>
+            <button class="building-btn" data-building="stonequarry" style="background-color: #696969; color: white;" title="Stone Quarry - Extracts stone from the earth">⛏️ Quarry</button>
+            <button class="building-btn" data-building="warehouse" style="background-color: #8B7355; color: white;" title="Warehouse - Increases storage capacity">📦 Warehouse</button>
+            <button class="building-btn" data-building="cobblepath" style="background-color: #808080; color: white;" title="Cobble Path - Decorative">🛤️ Path</button>
+          </div>
+        </div>
+        <div class="control-group">
+          <button id="clearAllBtn" class="action-btn warning-btn">Clear All Buildings</button>
+        </div>
+        <span id="currentBuilding" class="current-building">Current: <span class="building-indicator">🏠 House</span></span>
+        <span id="buildingStats" class="building-stats">Houses: 0 | Farms: 0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <div class="canvas-wrapper">
+      <!-- Canvas will be inserted here by JavaScript -->
+    </div>
+    
+    <div class="message-panel">
+      <div class="message-panel-header">
+        <strong>Event Log</strong>
+      </div>
+      <div class="message-panel-content" id="messageLog">
+        <!-- Messages will be populated by eventQueue.js -->
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    // Navigation functionality
+    const navItems = document.querySelectorAll('.nav-item');
+    const windows = document.querySelectorAll('.content-window');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', function() {
+        const windowId = this.getAttribute('data-window');
+        const targetWindow = document.getElementById(windowId);
+        
+        const isActive = this.classList.contains('active');
+        
+        navItems.forEach(nav => nav.classList.remove('active'));
+        windows.forEach(win => win.classList.remove('active'));
+        
+        if (!isActive) {
+          this.classList.add('active');
+          targetWindow.classList.add('active');
+        }
+      });
+    });
+  </script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
