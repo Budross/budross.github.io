@@ -856,6 +856,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       // Add welcome messages to event queue
       eventQueue.addMessage('Welcome to the game!');
       eventQueue.addMessage('Use the sidebar to navigate controls.');
+      eventQueue.addMessage('Press 1 to use the Pan tool to explore the world (default)');
+      eventQueue.addMessage('Press 2 to highlight an individual tile');
+      eventQueue.addMessage('Press 3 to place the selected building in the sidebar menu');
 
       // Make canvas manager globally accessible for debugging
       window.canvasManager = canvasManager;
